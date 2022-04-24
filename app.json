@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "tinder-clone",
+    "slug": "tinder-clone",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
