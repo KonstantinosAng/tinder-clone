@@ -1,35 +1,31 @@
 # Tinder Clone
 
-Tinder clone using react native
+[Tinder clone](https://tinder.com) using [react native](https://reactnative.dev/), [tailwind css](https://www.npmjs.com/package/tailwind-rn) and [firebase](https://firebase.google.com/).
+
+## Installation
+
+Install modules:
+
+```bash
+yarn
+```
 
 ## Development
 
+- Run this command in a terminal
+
 ```bash
 expo start
-```
-
-for android type a after starting the emulator and for ios type i.
-
-or run from the terminal
-
-```bash
-expo run:android
 
 or
 
-expo run:ios
+yarn start
 ```
 
-## Build
-
-Android
+- Run this command in another terminal
 
 ```bash
-expo build:android -t apk
+yarn dev:tailwind
 ```
 
-IOS
-
-```bash
-expo build:ios -t apk
-```
+## Images

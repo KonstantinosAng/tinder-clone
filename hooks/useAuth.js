@@ -1,8 +1,10 @@
 import React, { useEffect, useState, createContext, useContext, useMemo } from "react"
 import * as Google from "expo-auth-session/providers/google"
+import * as WebBrowser from "expo-web-browser"
 import { ANDROID_CLIENT_ID, IOS_CLIENT_ID, EXPO_CLIENT_ID, WEB_CLIENT_ID } from "@env"
 import { GoogleAuthProvider, signInWithCredential, auth, onAuthStateChanged, signOut } from "../firebase/firebase"
-import Loading from "../components/Loading"
+
+WebBrowser.maybeCompleteAuthSession()
 
 const config = {
   expoClientId: EXPO_CLIENT_ID,

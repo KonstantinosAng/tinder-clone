@@ -1,9 +1,10 @@
-import { Button, Text } from "react-native"
 import React, { useLayoutEffect } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
+import Header from "../components/Header"
+import ChatList from "../components/ChatList"
 
 const ChatScreen = ({ navigation }) => {
-  const { setOptions, navigate } = navigation
+  const { setOptions } = navigation
 
   useLayoutEffect(() => {
     setOptions({
@@ -13,8 +14,8 @@ const ChatScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <Text>ChatScreen</Text>
-      <Button title="Go Back" onPress={() => navigate("Home")} />
+      <Header title="Chat" />
+      <ChatList />
     </SafeAreaView>
   )
 }

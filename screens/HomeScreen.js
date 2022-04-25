@@ -5,50 +5,8 @@ import useAuth from "../hooks/useAuth"
 import { useTailwind } from "tailwind-rn/dist"
 import { Ionicons, Entypo, AntDesign } from "@expo/vector-icons"
 import Swiper from "react-native-deck-swiper"
-import { onSnapshot, doc, db, collection, getDocs, query, where } from "../firebase/firebase"
-
-const DUMMY_DATA = [
-  {
-    id: 1,
-    firstName: "Sonny",
-    lastName: "Sangha",
-    job: "Software Developer",
-    photoURL: "https://tinder.com/static/tinder.png",
-    age: 50,
-  },
-  {
-    id: 2,
-    firstName: "Sonny",
-    lastName: "Sangha",
-    job: "Software Developer",
-    photoURL: "https://tinder.com/static/tinder.png",
-    age: 25,
-  },
-  {
-    id: 3,
-    firstName: "Sonny",
-    lastName: "Sangha",
-    job: "Software Developer",
-    photoURL: "https://tinder.com/static/tinder.png",
-    age: 32,
-  },
-  {
-    id: 4,
-    firstName: "Sonny",
-    lastName: "Sangha",
-    job: "Software Developer",
-    photoURL: "https://tinder.com/static/tinder.png",
-    age: 50,
-  },
-  {
-    id: 5,
-    firstName: "Sonny",
-    lastName: "Sangha",
-    job: "Software Developer",
-    photoURL: "https://tinder.com/static/tinder.png",
-    age: 50,
-  },
-]
+import { onSnapshot, doc, db, collection, getDocs, query, where, setDoc, getDoc, serverTimestamp } from "../firebase/firebase"
+import generateId from "../lib/generateId"
 
 const HomeScreen = ({ navigation }) => {
   const { navigate, setOptions } = navigation
@@ -61,13 +19,39 @@ const HomeScreen = ({ navigation }) => {
     if (!profiles[cardIndex]) return
 
     const userSwiped = profiles[cardIndex]
-    await setDoc(doc(db, "users", user.uid, "passes", userSwiped.id))
+    await setDoc(doc(db, "users", user.uid, "passes", userSwiped.id), userSwiped)
   }
   const swipeRight = async cardIndex => {
     if (!profiles[cardIndex]) return
 
     const userSwiped = profiles[cardIndex]
-    await setDoc(doc(db, "users", user.uid, "swipes", userSwiped.id))
+    const loggedInProfile = await (await getDoc(doc(db, "users", user.uid))).data()
+
+    // Check if the user you swiped right also swiped right on you
+    await getDoc(doc(db, "users", userSwiped.id, "swipes", user.uid)).then(async docSnapshot => {
+      if (docSnapshot.exists()) {
+        // He has swiped right on you before you swiped right on him
+        await setDoc(doc(db, "users", user.uid, "swipes", userSwiped.id), userSwiped).catch(error => console.error(error))
+
+        await setDoc(doc(db, "matches", generateId(user.uid, userSwiped.id)), {
+          users: {
+            [user.uid]: loggedInProfile,
+            [userSwiped.id]: userSwiped,
+          },
+          usersMatched: [user.uid, userSwiped.id],
+          timestamp: serverTimestamp(),
+        })
+          .catch(error => console.error(error))
+          .finally(() =>
+            navigate("Match", {
+              loggedInProfile,
+              userSwiped,
+            })
+          )
+      } else {
+        await setDoc(doc(db, "users", user.uid, "swipes", userSwiped.id), userSwiped).catch(error => console.error(error))
+      }
+    })
   }
 
   useEffect(() => {
@@ -89,7 +73,7 @@ const HomeScreen = ({ navigation }) => {
         )
       )
     }
-    fetchCards()
+    if (user) fetchCards()
     return () => cleanUp()
   }, [user, db])
 
@@ -102,7 +86,6 @@ const HomeScreen = ({ navigation }) => {
     })
     return () => cleanUp()
   }, [])
-
   return (
     <SafeAreaView style={tw("flex-1")}>
       <View style={tw("flex-row items-center justify-between relative px-5 py-4")}>
@@ -167,7 +150,7 @@ const HomeScreen = ({ navigation }) => {
             ) : (
               <View style={[tw("relative bg-white h-3/4 rounded-xl justify-center items-center"), styles.cardShadow]}>
                 <Text style={tw("font-bold pb-5 text-2xl")}>No more profiles</Text>
-                <Image style={tw("h-20 w-20")} source={{ uri: "https://links.papareact.com/6gb" }} />
+                <Image style={tw("h-20 w-20")} source={require("../assets/sad.png")} />
               </View>
             )
           }

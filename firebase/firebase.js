@@ -10,7 +10,20 @@ import {
 
 import { initializeApp } from "firebase/app"
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut } from "firebase/auth"
-import { getFirestore, setDoc, doc, serverTimestamp, onSnapshot, collection, getDocs, query, where } from "firebase/firestore"
+import {
+  getFirestore,
+  setDoc,
+  addDoc,
+  doc,
+  serverTimestamp,
+  onSnapshot,
+  collection,
+  getDocs,
+  query,
+  where,
+  getDoc,
+  orderBy,
+} from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
@@ -41,4 +54,7 @@ export {
   getDocs,
   query,
   where,
+  getDoc,
+  addDoc,
+  orderBy,
 }
