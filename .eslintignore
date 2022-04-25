@@ -1,0 +1,10 @@
+node_modules/
+build/
+assets/
+fonts/
+
+**/*.min.js
+**/*.min.css
+
+.vscode/
+.idea/

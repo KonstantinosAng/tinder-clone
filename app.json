@@ -5,6 +5,10 @@
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "scheme": "exp",
+    "android": {
+      "package": "host.exp.exponent"
+    }
   }
 }
