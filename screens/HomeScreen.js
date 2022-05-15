@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation }) => {
       )
     }
     if (user) fetchCards()
-    return () => cleanUp()
+    return () => cleanUp && cleanUp()
   }, [user, db])
 
   useLayoutEffect(() => {
