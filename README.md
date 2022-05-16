@@ -29,3 +29,15 @@ yarn dev:tailwind
 ```
 
 ## Images
+
+<p align="center">
+  <img src="img/img1.png" /> 
+</p>
+
+<p align="center">
+  <img src="img/img2.png" /> 
+</p>
+
+<p align="center">
+  <img src="img/img3.png" /> 
+</p>
