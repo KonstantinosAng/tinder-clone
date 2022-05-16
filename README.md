@@ -31,13 +31,25 @@ yarn dev:tailwind
 ## Images
 
 <p align="center">
-  <img src="img/img1.png" /> 
+  <img src="img/img1.png" alt="login-screen" width="50%" /> 
 </p>
 
 <p align="center">
-  <img src="img/img2.png" /> 
+  <img src="img/img2.png" alt="home-screen" width="50%"/> 
 </p>
 
 <p align="center">
-  <img src="img/img3.png" /> 
+  <img src="img/img3.png" alt="updateProfile-screen" width="50%"/> 
+</p>
+
+<p align="center">
+  <img src="img/img4.png" alt="updateProfile-screen" width="50%"/> 
+</p>
+
+<p align="center">
+  <img src="img/img5.png" alt="updateProfile-screen" width="50%"/> 
+</p>
+
+<p align="center">
+  <img src="img/img6.png" alt="updateProfile-screen" width="50%"/> 
 </p>
